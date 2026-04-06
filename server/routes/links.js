@@ -28,7 +28,7 @@ router.post('/',async (req,res)=>{
 router.get('/',async (req,res)=>{
     try {
         const result=await pool.query(
-            'SELECT 8 from links ORDER BY created_at DESC'
+            'SELECT * FROM links ORDER BY created_at DESC'
         )
         res.json(result.rows)
     } catch (error) {
@@ -38,7 +38,7 @@ router.get('/',async (req,res)=>{
 
 //delete
 router.delete('/:slug',async (req,res)=>{
-    const {slug} =req.body
+    const {slug} =req.params
     try {
         await pool.query('DELETE FROM links WHERE slug=$1',[slug])
         res.json({message: "Link deleted"})

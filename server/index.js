@@ -8,7 +8,12 @@ import linksRouter from './routes/links.js'
  dotenv.config()
 const app=express()
 
-app.use(cors())
+app.use(cors({
+  origin: [
+    'http://localhost:5173',              // local dev
+    'https://url-shortener.vercel.app'   //  Vercel URL
+  ]
+}));
 app.use(express.json()) //lets express read JSON requestbodies
 
 //api routes
@@ -22,7 +27,7 @@ app.get('/:slug', async (req,res)=>{
             'UPDATE links SET clicks = clicks + 1 WHERE slug = $1 RETURNING original',
             [slug]
         );
-        if (result.rows.lenth ===0)
+        if (result.rows.length ===0)
             return res.status(404).json({error:'link not found'})
         res.redirect(result.rows[0].original) //302 redirects to original URL
      } catch (error) {
@@ -33,5 +38,4 @@ app.get('/:slug', async (req,res)=>{
 const PORT=process.env.PORT || 4000;
 app.listen(PORT,()=>console.log(`server running on port ${PORT}`))
     
-
 
