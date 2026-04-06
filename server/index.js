@@ -11,7 +11,7 @@ const app=express()
 app.use(cors({
   origin: [
     'http://localhost:5173',              // local dev
-    'https://url-shortener.vercel.app'   //  Vercel URL
+    'https://url-shortener-ruddy-tau.vercel.app/'   //  Vercel URL
   ]
 }));
 app.use(express.json()) //lets express read JSON requestbodies
